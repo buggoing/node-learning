@@ -1,27 +1,35 @@
-function factorial(num) {
-    if (num <= 1) { return 1; }
-    return num * arguments.callee(num - 1);
+function factorial (num) {
+    if (num <= 1) { return 1 }
+    return num * arguments.callee(num - 1)
 }
 
-function inner() {
-    console.log(arguments.callee.caller);
+function inner () {
+    console.log(arguments.callee.caller)
 }
 
-function outer() {
-    inner();
+function outer () {
+    inner()
 }
 
-outer();
+outer()
 
-function sum(num1, num2) {
-    return num1 + num2;
+function sum (num1, num2) {
+    return num1 + num2
 }
 
-function applySum(num1, num2) {
-    return sum.apply(this, arguments);
+function applySum (num1, num2) {
+    return sum.apply(this, arguments)
     // retrun sum.apply(this, [num1, num2])
 }
 
-function callSum(num1, num2) {
-    return sum.call(this, num1, num2);
+function callSum (num1, num2) {
+    return sum.call(this, num1, num2)
 }
+
+function changeParams (list) {
+    list.push(2)
+}
+
+const li = [23, 4]
+changeParams(li)
+console.log(li)

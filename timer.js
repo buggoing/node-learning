@@ -6,10 +6,10 @@ setTimeout(() => {
     console.log('setTimeout with 1000')
 }, 1000)
 
-let num = 0;
+let num = 0
 setInterval(() => {
-    console.log(`setInterval 1000, num: ${num}`);
-    num += 1;
+    console.log(`setInterval 1000, num: ${num}`)
+    num += 1
 }, 1000)
 
 setImmediate(() => console.log('setImmediate'))
