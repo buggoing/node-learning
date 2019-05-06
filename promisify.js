@@ -1,7 +1,7 @@
 const util = require('util')
 const fs = require('fs')
 
-util.promisify(fs.readFile)('sum.j')
+util.promisify(fs.readFile)('sum.js')
     .then(data => {
         console.log(data)
     })

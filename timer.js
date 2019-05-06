@@ -14,6 +14,6 @@ setInterval(() => {
 
 setImmediate(() => console.log('setImmediate'))
 
-process.nextTick(() => console.log('process.nextTice'))
+process.nextTick(() => console.log('process.nextTick'))
 
 console.log('main thread')

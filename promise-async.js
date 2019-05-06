@@ -66,6 +66,7 @@ console.log('end test')
 
 function promise1(x) {
     return new Promise((resolve, reject) => {
+        return reject('wrong in p1')
         console.log('from promise1', x)
 
         p2(2).then(x => {
@@ -90,7 +91,8 @@ function p2(x) {
 p2(23).then((x) => {
     console.log('recvied: ', x)
     p2(11).then(() => {
-        return Promise.reject(1111)
+        // return Promise.reject(1111)
+        JSON.parse(';;')
     }).catch((err) => {
         console.log('err in inner p2', err)
     })
@@ -138,6 +140,12 @@ p2(23).then((x) => {
 
 // run()
 
-promise1(23).then(() => {
-    console.log('then promise1')
-}).catch(err => console.log(err))
+// promise1(23).then(() => {
+//     console.log('then promise1')
+// }).catch(err => console.log(err))
+
+promise1(23).then(res => {
+    console.log('p1 over')
+}).catch(err => {
+    console.log('p1 wrong')
+})
