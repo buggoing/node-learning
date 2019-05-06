@@ -1,22 +1,28 @@
-const cluster = require('cluster') // | |
-const http = require('http') // | |
-const numCPUs = require('os').cpus().length // | |    都执行了
-if (cluster.isMaster) { // |-|-----------------
-    // Fork workers.                             //   |
-    for (var i = 0; i < numCPUs; i++) { //   |
-        cluster.fork() //   |
+const cluster = require('cluster')
+
+if (cluster.isMaster) {
+    const cpuNum = require('os').cpus().length
+
+    for (let i = 0; i < cpuNum; ++i) {
+        cluster.fork()
     }
-    console.log(`parent ${process.pid}`) //   | 仅父进程执行 (a.js)
-    cluster.on('exit', (worker) => { //   |
-        console.log(`${worker.process.pid} died`) //   |
-    }) //   |
-} else { // |-------------------
-    // Workers can share any TCP connection      // |
-    // In this case it is an HTTP server         // |
-    http.createServer((req, res) => { // |
-        res.writeHead(200)
-        console.log(`from ${process.pid}`) //   |
-        res.end('hello world\n') // |
-    }).listen(8000) // |
-} // |-------------------
-console.log(process.pid)
+
+    // 创建进程完成后输出提示信息
+    cluster.on('online', (worker) => {
+        console.log('Create worker-' + worker.process.pid)
+    })
+
+    // 子进程退出后重启
+    cluster.on('exit', (worker, code, signal) => {
+        console.log('[Master] worker ' + worker.process.pid + ' died with code: ' + code + ', and signal: ' + signal)
+        cluster.fork()
+    })
+} else {
+    const net = require('net')
+    net.createServer().on('connection', (socket) => {
+        // 利用setTimeout模拟处理请求时的操作耗时
+        setTimeout(() => {
+            socket.end('Request handled by worker-' + process.pid)
+        }, 100)
+    }).listen(8080)
+}
