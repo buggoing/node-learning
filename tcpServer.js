@@ -1,6 +1,6 @@
 const net = require('net');
 
-const server = net.createServer((socket => {
+const server = net.createServer(socket => {
     socket.on('data', data => {
         console.log(`received: ${data}`);
         socket.write("你好");

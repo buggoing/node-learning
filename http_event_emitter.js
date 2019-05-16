@@ -24,7 +24,6 @@ http.createServer((req, res) => {
     ee.removeAllListeners()
     ee.once('payres', (data) => {
         console.log('get payres')
-        console.log(res)
         res.writeHead(200, {'Content-Type': 'text/plain'})
         res.end(data)
     })
@@ -41,5 +40,5 @@ setInterval(() => {
         }
     })
 
-}, 3000)
+}, 10)
 
